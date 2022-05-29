@@ -1,4 +1,4 @@
-package middleware
+package accesslog
 
 import (
 	"encoding/json"
