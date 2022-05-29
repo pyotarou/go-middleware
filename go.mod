@@ -1,4 +1,4 @@
-module middleware
+module pyotarou/go-middleware
 
 go 1.18
 
