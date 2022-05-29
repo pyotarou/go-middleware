@@ -1,4 +1,4 @@
-module github.com/pyotarou/go-middleware
+module github.com/pyotarou/middleware
 
 go 1.18
 
