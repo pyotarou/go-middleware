@@ -2,11 +2,17 @@
 I am creating middleware for web server development.
 
 The currently implemented functions are as follows.
-- AccessLog
+- Access-Log
+- Panic Recovery
+- Basic-Authentication
 
 ## Usage
 ```
-accesslog.AccessLogger(<http.Handler>)
+import accesslog "github.com/pyotarou/go-middleware"
+
+func hogehoge() {
+    http.Handle("/", accesslog.AccessLogger(<http.Handler>))
+}
 ```
 
 ## Installation
