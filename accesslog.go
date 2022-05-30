@@ -25,6 +25,9 @@ func NewAccessLog(timeStamp time.Time, latency int64, path, os string) *AccessLo
 	}
 }
 
+// ログを取得するミドルウェア
+// 引数：http.Handler型
+// 戻り値：http.Handler型
 func AccessLogger(h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		accessTimeBefore := time.Now()
@@ -38,6 +41,24 @@ func AccessLogger(h http.Handler) http.Handler {
 		h.ServeHTTP(w, r)
 	}
 	return http.HandlerFunc(fn)
+}
+
+// http.HandlerFunc型のログを取得するミドルウェア
+// 引数：http.HandlerFunc型
+// 戻り値：http.HandlerFunc型
+func AccessLoggerFunc(h http.HandlerFunc) http.HandlerFunc {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		accessTimeBefore := time.Now()
+		defer func() {
+			ua := ua.Parse(r.UserAgent())
+			accessTimeAfter := time.Now()
+			accessTimeDiff := accessTimeAfter.Sub(accessTimeBefore).Microseconds()
+			accessLog := NewAccessLog(accessTimeBefore, accessTimeDiff, r.URL.Path, ua.OS)
+			accessLog.PrintJson()
+		}()
+		h(w, r)
+	}
+	return fn
 }
 
 func (a *AccessLog) PrintJson() {

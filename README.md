@@ -8,10 +8,10 @@ The currently implemented functions are as follows.
 
 ## Usage
 ```
-import accesslog "github.com/pyotarou/go-middleware"
+import mid "github.com/pyotarou/go-middleware"
 
 func hogehoge() {
-    http.Handle("/", accesslog.AccessLogger(<http.Handler>))
+    http.Handle("/", mid.AccessLogger(<http.Handler>))
 }
 ```
 
